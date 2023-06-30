@@ -133,9 +133,9 @@ resource "aws_db_instance" "db_instance" {
 
 # Create EC2 instances for Django application in dev environment
 resource "aws_instance" "dev_instance" {
-  ami           = "ami-xxxxxxxxxxxxxx"  # Set your desired AMI ID
+  ami           = "ami-024e6efaf93d85776"  # Set your desired AMI ID
   instance_type = "t2.micro"  # Set your desired instance type
-  key_name      = "my-key-pair"  # Set your desired key pair name
+  key_name      = "krishnavamshi"  # Set your desired key pair name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
   subnet_id              = aws_subnet.dev_subnet.id
@@ -147,9 +147,9 @@ resource "aws_instance" "dev_instance" {
 
 # Create EC2 instances for Django application in prod environment
 resource "aws_instance" "prod_instance" {
-  ami           = "ami-xxxxxxxxxxxxxx"  # Set your desired AMI ID
+  ami           = "ami-024e6efaf93d85776"  # Set your desired AMI ID
   instance_type = "t2.micro"  # Set your desired instance type
-  key_name      = "my-key-pair"  # Set your desired key pair name
+  key_name      = "krishnavamshi"  # Set your desired key pair name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
   subnet_id              = aws_subnet.prod_subnet.id
@@ -161,9 +161,9 @@ resource "aws_instance" "prod_instance" {
 
 # Create EC2 instances for Django application in test environment
 resource "aws_instance" "test_instance" {
-  ami           = "ami-xxxxxxxxxxxxxx"  # Set your desired AMI ID
+  ami           = "ami-024e6efaf93d85776"  # Set your desired AMI ID
   instance_type = "t2.micro"  # Set your desired instance type
-  key_name      = "my-key-pair"  # Set your desired key pair name
+  key_name      = "krishnavamshi"  # Set your desired key pair name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
   subnet_id              = aws_subnet.test_subnet.id
