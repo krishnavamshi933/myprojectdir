@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git credentialsId: 'your-git-credentials', url: 'your-git-repository-url'
+                git branch: 'main', credentialsId: 'git', url: 'git@github.com:krishnavamshi933/myprojectdir.git'
             }
         }
 
@@ -68,47 +68,47 @@ pipeline {
         }
     }
 
-    post {
-        always {
+  //  post {
+    //    always {
             // Add any post-build actions here
             // For example, archiving artifacts or sending notifications
-        }
-    }
+      //  }
+  //  }
 }
 
 def deployToServer(server) {
     stage('Setup Virtual Environment') {
-        sshagent(credentials: ['your-ssh-credentials']) {
+        sshagent(credentials: ['git']) {
             sh "ssh user@${server} 'python3 -m venv myprojectenv'"
         }
     }
 
     stage('Install Dependencies') {
-        sshagent(credentials: ['your-ssh-credentials']) {
+        sshagent(credentials: ['git']) {
             sh "ssh user@${server} 'source myprojectenv/bin/activate && pip install -r requirements.txt'"
         }
     }
 
     stage('Run Migrations') {
-        sshagent(credentials: ['your-ssh-credentials']) {
+        sshagent(credentials: ['git']) {
             sh "ssh user@${server} 'source myprojectenv/bin/activate && cd myproject && python manage.py migrate'"
         }
     }
 
     stage('Collect Static Files') {
-        sshagent(credentials: ['your-ssh-credentials']) {
+        sshagent(credentials: ['git']) {
             sh "ssh user@${server} 'source myprojectenv/bin/activate && cd myproject && python manage.py collectstatic --noinput'"
         }
     }
 
     stage('Run Gunicorn Daemon') {
-        sshagent(credentials: ['your-ssh-credentials']) {
+        sshagent(credentials: ['git']) {
             sh "ssh user@${server} 'source myprojectenv/bin/activate && cd myproject && gunicorn myproject.wsgi:application --bind=127.0.0.1:8000 --daemon'"
         }
     }
 
     stage('Restart Nginx') {
-        sshagent(credentials: ['your-ssh-credentials']) {
+        sshagent(credentials: ['git']) {
             sh "ssh user@${server} 'sudo systemctl restart nginx'"
         }
     }
