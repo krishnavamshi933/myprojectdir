@@ -47,7 +47,7 @@ pipeline {
 
                     switch (params.ENVIRONMENT) {
                         case 'dev':
-                            servers = ['dev-server']
+                            servers = ['172.31.43.146']
                             break
                         case 'test':
                             servers = ['test-server']
