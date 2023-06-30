@@ -119,7 +119,7 @@ resource "aws_db_instance" "db_instance" {
   allocated_storage    = 20
   storage_type         = "gp2"
   identifier           = "my-database"
-  name                 = "my_database"
+  db_name              = "my_database"  # Set your desired database name
   username             = "db_username"  # Set your desired database username
   password             = "db_password"  # Set your desired database password
   publicly_accessible = false
