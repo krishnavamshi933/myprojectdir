@@ -79,37 +79,37 @@ pipeline {
 def deployToServer(server) {
     stage('Setup Virtual Environment') {
         sshagent(credentials: ['git']) {
-            sh "ssh user@${server} 'python3 -m venv myprojectenv'"
+            sh "ssh ubuntu@${server} 'python3 -m venv myprojectenv'"
         }
     }
 
     stage('Install Dependencies') {
         sshagent(credentials: ['git']) {
-            sh "ssh user@${server} 'source myprojectenv/bin/activate && pip install -r requirements.txt'"
+            sh "ssh ubuntu@${server} 'source myprojectenv/bin/activate && pip install -r requirements.txt'"
         }
     }
 
     stage('Run Migrations') {
         sshagent(credentials: ['git']) {
-            sh "ssh user@${server} 'source myprojectenv/bin/activate && cd myproject && python manage.py migrate'"
+            sh "ssh ubuntu@${server} 'source myprojectenv/bin/activate && cd myprojectdir && python manage.py migrate'"
         }
     }
 
     stage('Collect Static Files') {
         sshagent(credentials: ['git']) {
-            sh "ssh user@${server} 'source myprojectenv/bin/activate && cd myproject && python manage.py collectstatic --noinput'"
+            sh "ssh user@${server} 'source myprojectenv/bin/activate && cd myprojectdir && python manage.py collectstatic --noinput'"
         }
     }
 
     stage('Run Gunicorn Daemon') {
         sshagent(credentials: ['git']) {
-            sh "ssh user@${server} 'source myprojectenv/bin/activate && cd myproject && gunicorn myproject.wsgi:application --bind=127.0.0.1:8000 --daemon'"
+            sh "ssh ubuntu@${server} 'source myprojectenv/bin/activate && cd myprojectdir && gunicorn myproject.wsgi:application --bind=127.0.0.1:8000 --daemon'"
         }
     }
 
     stage('Restart Nginx') {
         sshagent(credentials: ['git']) {
-            sh "ssh user@${server} 'sudo systemctl restart nginx'"
+            sh "ssh ubuntu@${server} 'sudo systemctl restart nginx'"
         }
     }
 }
